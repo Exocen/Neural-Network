@@ -1,0 +1,50 @@
+## Remove all the weird extensions (compilation of classes, latex...)
+*~
+*#*#
+*.iml
+*.ipr
+*.iws
+*.pyc
+*.tm.epoch
+*.vim
+*-shim.sbt
+*.class
+*.log
+*.aux
+*.nav
+*.out
+*.snm
+*.toc
+*.ps
+*.dvi
+
+## Avoid the generated documents
+slides_n2s3.pdf
+slides_n2s3.synctex.gz
+presentation_n2s3.pdf
+presentation_n2s3.synctex.gz
+
+## Hidden directory
+.cache
+.classpath
+.project
+.settings
+.ensime
+.ensime_lucene/
+.ensime_cache/
+.idea/
+
+## Directory to avoid
+project/boot/
+project/target/
+project/project/
+target/
+/logs
+tmp/
+auto/
+different_presentations/presentation/code/*.tex
+_region_.tex
+slides_n2s3.vrb
+
+## Other CVS ?
+.svn
