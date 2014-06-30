@@ -1,0 +1,11 @@
+[0m[[0minfo[0m] [0mRunning fr.cristal.emeraude.n2s3.Main [0m
+[0m[[0mdebug[0m] [0mWaiting for threads to exit or System.exit to be called.[0m
+[0m[[0mdebug[0m] [0m  Classpath:[0m
+[0m[[0mdebug[0m] [0m	/home/exo/git/N2S3/target/scala-2.11/classes[0m
+[0m[[0mdebug[0m] [0m	/home/exo/.ivy2/cache/org.scala-lang/scala-library/jars/scala-library-2.11.1.jar[0m
+[0m[[0mdebug[0m] [0m	/home/exo/.ivy2/cache/com.typesafe.akka/akka-actor_2.11/jars/akka-actor_2.11-2.3.3.jar[0m
+[0m[[0mdebug[0m] [0m	/home/exo/.ivy2/cache/com.typesafe/config/bundles/config-1.2.1.jar[0m
+[0m[[0mdebug[0m] [0m	/home/exo/.ivy2/cache/com.typesafe.akka/akka-testkit_2.11/jars/akka-testkit_2.11-2.3.3.jar[0m
+[0m[[0mdebug[0m] [0mWaiting for thread run-main-0 to terminate.[0m
+[0m[[0mdebug[0m] [0m	Thread run-main-0 exited.[0m
+[0m[[0mdebug[0m] [0mWaiting for thread Neuronal-network-akka.actor.default-dispatcher-2 to terminate.[0m

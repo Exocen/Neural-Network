@@ -1,0 +1,8 @@
+akka.log-config-on-start=on
+akka.actor.deployment {
+    /NeuronialRouter {
+    /Download
+        router = round-robin
+        nr-of-instances = 10
+    }
+}
