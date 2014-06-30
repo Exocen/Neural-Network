@@ -25,7 +25,7 @@ abstract class SynapseTime(
       forwardPQL ! ForwardPQL(v, System.nanoTime, child)
 
     case SpikeBackward(v: Double, timestamp: Long) =>
-      println("Changement de poids0 synaptique")
+      println("Changement de poids synaptique")
       sender ! done()
       //TODO : faire le changement de poids synaptique
 
