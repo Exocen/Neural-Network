@@ -36,3 +36,5 @@ case class ForwardPQL(
   dest: ActorRef ) extends Spike
 
 case class done()
+
+case class ack()

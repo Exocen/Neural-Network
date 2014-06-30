@@ -15,11 +15,51 @@ class PriorityQueueLayer(
 
   val log = Logging(context.system, this)
   var waitingline = scala.collection.mutable.Seq[Any]() //TODO: Corriger le Any
-  val MaxAtOneTime = 5
-  var tmp = 0
 
-  def Process (FWPQL : ForwardPQL) = {}
+  def processFW (v: Double, timestamp: Long, dest: ActorRef) = {
+    sender ! ack()
+    if (waitingline.isEmpty){
+      waitingline = waitingline :+ ForwardPQL(v,timestamp,dest)
+      self ! done()
+    }
+    else{
+      waitingline = waitingline :+ ForwardPQL(v,timestamp,dest)}
+  }
 
+  def processBW (v: Double, timestamp: Long, dest: ActorRef) = {
+    sender ! ack()
+    if (waitingline.isEmpty){
+      waitingline = waitingline :+ BackwardPQL(v,timestamp,dest)
+      self ! done()
+    }
+    else{
+      waitingline = waitingline :+ BackwardPQL(v,timestamp,dest)}
+  }
+
+  def processDone = {
+
+    if(!waitingline.isEmpty){
+
+      waitingline(0) match {
+
+        case ForwardPQL(v: Double, timestamp: Long, dest: ActorRef) =>
+          dest ! SpikeForward(v, timestamp)
+          waitingline = waitingline.tail
+
+        case BackwardPQL(v: Double, timestamp: Long, dest: ActorRef) =>
+          dest ! SpikeBackward(v, timestamp)
+          waitingline = waitingline.tail
+
+        /**
+          * TODO :mettre une exception
+          */
+        case _ => println("wtf man ?")
+
+      }
+    }
+    //TODO enlever si useless
+    else{ println("PQL : Stop") }
+  }
 
   /**
     * TODO: Scaladoc
@@ -27,48 +67,15 @@ class PriorityQueueLayer(
   def receive = {
     case ForwardPQL(v: Double, timestamp: Long, dest: ActorRef) =>
       println("PQ : reception FPQL")
-      if (waitingline.isEmpty){
-        waitingline = waitingline :+ ForwardPQL(v,timestamp,dest)
-        self ! done()
-
-      }
-      else{
-        waitingline = waitingline :+ ForwardPQL(v,timestamp,dest)}
-
+      processFW(v, timestamp, dest)
 
     case BackwardPQL(v: Double, timestamp: Long, dest: ActorRef) =>
       println("PQ : reception BPQL")
-      if (waitingline.isEmpty){
-        waitingline = waitingline :+ BackwardPQL(v,timestamp,dest)
-        self ! done()
-      }
-      else{
-        waitingline = waitingline :+ BackwardPQL(v,timestamp,dest)}
+      processBW(v, timestamp, dest)
 
 
-    case done() =>
+    case done() => processDone
 
-      if(!waitingline.isEmpty){
-
-        waitingline(0) match {
-
-          case ForwardPQL(v: Double, timestamp: Long, dest: ActorRef) =>
-            dest ! SpikeForward(v, timestamp)
-            waitingline = waitingline.tail
-
-          case BackwardPQL(v: Double, timestamp: Long, dest: ActorRef) =>
-            dest ! SpikeBackward(v, timestamp)
-            waitingline = waitingline.tail
-
-          /**
-            * TODO :mettre une exception
-            */
-          case _ => println("wtf man ?")
-
-        }
-      }
-      //TODO enlever si useless
-      else{println("PQL Stoppé")}
     case Welcome => // debug purposes
   }
 
