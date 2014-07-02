@@ -23,7 +23,7 @@ class SynapseSimplisticWoTime(
   post: ActorRef) extends Synapse(pre, post) {
 
   val log = Logging(context.system, this)
-  
+
   /**
    * a formula to test the network
    */

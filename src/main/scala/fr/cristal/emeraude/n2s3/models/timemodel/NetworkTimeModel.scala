@@ -15,9 +15,9 @@ import fr.cristal.emeraude.n2s3.corenetwork.Synapse
 import fr.cristal.emeraude.n2s3.features.time.PriorityQueueLayer
 
 /**
-  * TODO
-  * @author wgouzer & qbailleul
-  */
+ * TODO
+ * @author wgouzer & qbailleul
+ */
 class NetworkTimeModel(
   nbNPL: Seq[Int],
   threshold: Double = 8) extends Network {
@@ -26,8 +26,8 @@ class NetworkTimeModel(
   var PQL_per_layer = collection.immutable.IndexedSeq[ActorRef]()
 
   /**
-    * TODO + enlever println
-    */
+   * TODO + enlever println
+   */
   override def firingSpikes() {
     println("Fire !")
     val v: Double = 10.0
@@ -35,16 +35,16 @@ class NetworkTimeModel(
   }
 
   /**
-    * TODO : this scaladoc
-    */
+   * TODO : this scaladoc
+   */
   def createPQL(layer: Int) = {
     PQL_per_layer = for (i <- 0 until layer - 1)
-    yield system.actorOf(Props(new PriorityQueueLayer(i)))
+      yield system.actorOf(Props(new PriorityQueueLayer(i)))
   }
 
   /**
-    * TODO : this scaladoc
-    */
+   * TODO : this scaladoc
+   */
   def createNeuron(layer: Int): Neuron = {
     if (layer == 0) {
       new NeuronTimeModel(
@@ -52,27 +52,27 @@ class NetworkTimeModel(
         this.threshold,
         PQL_per_layer(layer), // forwardpql
         PQL_per_layer(layer) // backwardpql
-      )
+        )
     } else if (layer == nbLayer - 1) {
       new NeuronTimeModel(
         layer,
         this.threshold,
         PQL_per_layer(layer - 1), // forwardpql
         PQL_per_layer(layer - 1) // backwardpql
-      )
+        )
     } else {
       new NeuronTimeModel(
         layer,
         this.threshold,
         PQL_per_layer(layer), // forwardpql
         PQL_per_layer(layer - 1) // backwardpql
-      )
+        )
     }
   }
 
   /**
-    * TODO : this scaladoc + enlever printlns
-    */
+   * TODO : this scaladoc + enlever printlns
+   */
   def createSynapse(pre: ActorRef, post: ActorRef): Synapse = {
     implicit val timeout = Timeout(Duration(60, "seconds"))
 

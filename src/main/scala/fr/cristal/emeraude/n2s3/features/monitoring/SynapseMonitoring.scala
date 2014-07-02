@@ -15,11 +15,11 @@ abstract class SynapseMonitoring(
 
   val log = Logging(context.system, this)
 
-//  def processUnknown(s: String) = {
-    // log.info(s)
-//    throw new UnknownMessageSynapseException(
-//      "Synapse received an unknown message, don't know what to do")
-//  }
+  //  def processUnknown(s: String) = {
+  // log.info(s)
+  //    throw new UnknownMessageSynapseException(
+  //      "Synapse received an unknown message, don't know what to do")
+  //  }
 
   override def receive = {
     case _ => println("monitoring synapse")

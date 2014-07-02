@@ -7,38 +7,38 @@ import akka.event.Logging
 import fr.cristal.emeraude.n2s3.corenetwork.Welcome
 
 /**
-  * TODO THIS SCALADOC
-  * @author wgouzer & qbailleul
-  */
+ * TODO THIS SCALADOC
+ * @author wgouzer & qbailleul
+ */
 class PriorityQueueLayer(
   layer: Int) extends Actor {
 
   val log = Logging(context.system, this)
   var waitingline = scala.collection.mutable.Seq[Any]() //TODO: Corriger le Any
 
-  def processFW (v: Double, timestamp: Long, dest: ActorRef) = {
+  def processFW(v: Double, timestamp: Long, dest: ActorRef) = {
     sender ! ack()
-    if (waitingline.isEmpty){
-      waitingline = waitingline :+ ForwardPQL(v,timestamp,dest)
+    if (waitingline.isEmpty) {
+      waitingline = waitingline :+ ForwardPQL(v, timestamp, dest)
       self ! done()
+    } else {
+      waitingline = waitingline :+ ForwardPQL(v, timestamp, dest)
     }
-    else{
-      waitingline = waitingline :+ ForwardPQL(v,timestamp,dest)}
   }
 
-  def processBW (v: Double, timestamp: Long, dest: ActorRef) = {
+  def processBW(v: Double, timestamp: Long, dest: ActorRef) = {
     sender ! ack()
-    if (waitingline.isEmpty){
-      waitingline = waitingline :+ BackwardPQL(v,timestamp,dest)
+    if (waitingline.isEmpty) {
+      waitingline = waitingline :+ BackwardPQL(v, timestamp, dest)
       self ! done()
+    } else {
+      waitingline = waitingline :+ BackwardPQL(v, timestamp, dest)
     }
-    else{
-      waitingline = waitingline :+ BackwardPQL(v,timestamp,dest)}
   }
 
   def processDone = {
 
-    if(!waitingline.isEmpty){
+    if (!waitingline.isEmpty) {
 
       waitingline(0) match {
 
@@ -51,19 +51,18 @@ class PriorityQueueLayer(
           waitingline = waitingline.tail
 
         /**
-          * TODO :mettre une exception
-          */
+         * TODO :mettre une exception
+         */
         case _ => println("wtf man ?")
 
       }
-    }
-    //TODO enlever si useless
-    else{ println("PQL : Stop") }
+    } //TODO enlever si useless
+    else { println("PQL : Stop") }
   }
 
   /**
-    * TODO: Scaladoc
-    */
+   * TODO: Scaladoc
+   */
   def receive = {
     case ForwardPQL(v: Double, timestamp: Long, dest: ActorRef) =>
       println("PQ : reception FPQL")
@@ -72,7 +71,6 @@ class PriorityQueueLayer(
     case BackwardPQL(v: Double, timestamp: Long, dest: ActorRef) =>
       println("PQ : reception BPQL")
       processBW(v, timestamp, dest)
-
 
     case done() => processDone
 

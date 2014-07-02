@@ -11,16 +11,16 @@ import fr.cristal.emeraude.n2s3.corenetwork.Spike
 import fr.cristal.emeraude.n2s3.corenetwork.exceptions.UnknownMessageNeuronException
 
 /**
-  * TODO THIS SCALADOC
-  * @author wgouzer & qbailleul
-  */
+ * TODO THIS SCALADOC
+ * @author wgouzer & qbailleul
+ */
 abstract class NeuronTime(
   layer: Int,
   threshold: Double,
   forwardPQL: ActorRef,
   backwardPQL: ActorRef) extends Neuron(layer) {
 
-  def processFW (v: Double) = {
+  def processFW(v: Double) = {
     implicit val timeout = Timeout(Duration(60, "seconds"))
     sender ! done()
 
@@ -34,13 +34,13 @@ abstract class NeuronTime(
 
   }
 
-  def  processInput (v: Double) = {
+  def processInput(v: Double) = {
     output.foreach { o => forwardPQL ! ForwardPQL(v, System.nanoTime, o) }
   }
 
   /**
-    * TODO: Scaladoc+rm println ?
-    */
+   * TODO: Scaladoc+rm println ?
+   */
   override def receive = super.receive orElse {
 
     case SpikeForward(v: Double, timestamp: Long) =>

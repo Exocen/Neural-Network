@@ -7,16 +7,16 @@ import fr.cristal.emeraude.n2s3.corenetwork.Synapse
 import fr.cristal.emeraude.n2s3.corenetwork.exceptions.UnknownMessageSynapseException
 
 /**
-  * Synapses are the link between two Neurons.
-  *
-  * @constructor create a new Synapse in a form of an actor with a weight, a parent
-  * and a child
-  * @param weight mechanism for reinforcing or deprecating a link (synapse)
-  * @param parent the "parent-neuron" connected with this synapse
-  * @param child the "child-neuron" connected with this synapse
-  *
-  * @author wgouzer & qbailleul
-  */
+ * Synapses are the link between two Neurons.
+ *
+ * @constructor create a new Synapse in a form of an actor with a weight, a parent
+ * and a child
+ * @param weight mechanism for reinforcing or deprecating a link (synapse)
+ * @param parent the "parent-neuron" connected with this synapse
+ * @param child the "child-neuron" connected with this synapse
+ *
+ * @author wgouzer & qbailleul
+ */
 class SynapsePji(
   var weight: Double,
   pre: ActorRef,
@@ -25,8 +25,8 @@ class SynapsePji(
   val log = Logging(context.system, this)
 
   /**
-    * a formula to test the network
-    */
+   * a formula to test the network
+   */
   def pji_formula(v: Double): Double = {
     val oldw = weight
     weight = weight + (v / 10)

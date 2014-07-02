@@ -4,11 +4,10 @@ import fr.cristal.emeraude.n2s3.models.timemodel.NetworkTimeModel
 import fr.cristal.emeraude.n2s3.models.pji.NetworkPji
 import fr.cristal.emeraude.n2s3.models.simplisticwotime.NetworkSimplisticWoTime
 
-
 /**
-  * Instanciate the neuronal network with akka's actors.
-  * @author wgouzer & qbailleul
-  */
+ * Instanciate the neuronal network with akka's actors.
+ * @author wgouzer & qbailleul
+ */
 object Main {
 
   def usage() {
@@ -28,8 +27,8 @@ object Main {
     // instanciate the graph
     val nbNeuronPerLayer = Seq(1, 1)
 
-//        val net = new NetworkPji(nbNeuronPerLayer)
-//        val net = new NetworkSimplisticWoTime(nbNeuronPerLayer)
+    //        val net = new NetworkPji(nbNeuronPerLayer)
+    //        val net = new NetworkSimplisticWoTime(nbNeuronPerLayer)
     val net = new NetworkTimeModel(nbNeuronPerLayer)
 
     net.initiateNetwork()
